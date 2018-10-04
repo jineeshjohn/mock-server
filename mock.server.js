@@ -1,25 +1,17 @@
-const path = require('path');
-const jsonServer = require('json-server');
+var express = require('express'),
+   app = express(),
+   port = process.env.PORT || 1935;
 
-
-const server = jsonServer.create();
-const router = jsonServer.router(path.join(__dirname, 'db.json'));
-const middlewares = jsonServer.defaults();
-
-server.use(middlewares);
-
-server.get('/summary', (req, res) => {
-    const queries = req.query;
-    console.log("Query: ", queries)
-  res.jsonp(queries);
-});
- 
-server.use(router);
-
-
-
-
-// Use default router
-server.listen(1935, () => {
+app.listen(1935, () => {
   console.log('JSON Server is running');
+});
+app.use(function (req, res, next) {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    next();
+});
+app.get('/summary', (req, res) => {
+    const queries = req.query;
+    res.jsonp(queries);
 });

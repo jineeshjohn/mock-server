@@ -22,13 +22,9 @@ var fetch = function (location, options, callback) {
 };
 
 var iterationData = function (location, options, cb) {
-    console.log("JJJJJ: ", location);
+
 
     fetch(location, options, function (err, data) {
-
-
-
-
         parseCsv(data, {
             columns: true,
             escape: '\\',
@@ -40,5 +36,9 @@ var iterationData = function (location, options, cb) {
     // });
 
 }
+
+iterationData('./data-summary.csv', {}, function(){
+    console.log("KKK: ", arguments);
+});
 
 module.exports = iterationData;

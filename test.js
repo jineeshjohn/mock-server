@@ -4,7 +4,6 @@ var parseCsv = require('csv-parse');
 
 
 var fetch = function (location, options, callback) {
-    !callback && _.isFunction(options) && (callback = options, options = {});
 
     return (/^https?:\/\/.*/).test(location) ?
         // Load from URL
@@ -22,13 +21,12 @@ var fetch = function (location, options, callback) {
 
             return callback(null, value.toString());
         });
-},
+};
 
-var iterationData = function (location, options, callback) {
+var iterationData = function (location, options, cb) {
     console.log("JJJJJ: ", location);
-    if (_.isArray(location)) { return callback(null, location); }
 
-    fetch(location, function (err, data) {
+    fetch(location, options, function (err, data) {
 
         parseCsv(data, {
             columns: true,
@@ -40,5 +38,5 @@ var iterationData = function (location, options, callback) {
 }
 
 iterationData('./data-summary.csv', {}, function(){
-    console.log("KKK: ", args);
+    console.log("KKK: ", arguments);
 });

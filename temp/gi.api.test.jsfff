@@ -1,0 +1,117 @@
+const add = require('./add');
+const http = require('http');
+const asyncAwait = require('../util');
+const axios = require('axios');
+
+
+describe('Async', async () => {
+    const resArr = await asyncAwait('./positiveScenarios_singlePolicy.csv', {});
+    const domain = 'http://localhost:2020/insurancepolicies';
+    for (const params of resArr) {
+        it('Response Status should be 200', async () => {
+            const url = `${domain}?policyNumbers=${params.policyID}:${policyType}:${DC_SYSTEMID}&customerNumbers=${customerID}:${DC_SYSTEMID}&affinityId=${brand}&effectiveDate=${effectiveDate}`;
+            console.log("URL: ", url);
+            const res = await axios.get(url);
+            expect(res.status).should.have.status(200);
+        });
+    }
+});
+
+
+
+
+
+
+
+// pm.test("Response Status should be 200", () =>{
+//     pm.response.should.have.status(200);
+// });
+
+// const response = pm.response.json(),
+//     schema = {
+//     "type" : "array",
+//     "items" : {
+//         "type" : "object",
+//         "properties" : {
+//             "policyId" : {
+//                 "type" : "string"
+//             },
+//             "affinityId" : {
+//                 "type" : "string"
+//             },
+//             "coverHeader" : {
+//                 "type" : "string"
+//             },
+//             "coverStartPeriod" : {
+//                 "type" : "string"
+//             },
+//             "coverEndPeriod" : {
+//                 "type" : "string"
+//             },
+//             "riskAddress" : {
+//                 "type" : "string"
+//             },
+//             "coverDesc" : {
+//                 "type" : "string"
+//             },
+//             "expiryHighlight" : {
+//                 "type" : "boolean"
+//             },
+//             "additionalProperties" : false
+//         }
+//     }
+// };
+
+// pm.test("Response should match the expected schema", () => {
+//     let valid = validator.validate(response.insurancePolicies, schema);
+//     valid.should.be.true;
+// });
+
+// pm.test("Response Should have Only One insurancePolicy Details", () => {
+//     response.insurancePolicies.should.have.a.lengthOf(1);
+// });
+
+// const params = pm.request.url.query.all();
+// const getRequestParam = (property) => {
+//     let values= [];
+//     params.forEach((param) => {
+//         if(property === "effectiveDate" && param.value === ""){
+//             values.push(moment(new Date()).format('YYYY-DD-MM'));
+//         } else if (param.key === property){
+//             values.push(param.value);
+//         }
+//     })
+//     return values;
+// };
+
+// response.insurancePolicies.forEach(policy => {
+//     pm.test("Response PolicyId should match to Request PolicyId", () => {
+//         let [policyNumber, policyType,] = getRequestParam("policyNumbers")[0].split(":");
+//         policy.policyId.should.be.equal(policyType + policyNumber);
+//     });
+
+//     pm.test("Response AffinityId should match to Request AffinityId", () => {
+//         let [affinityId] = getRequestParam("affinityId");
+//         policy.affinityId.should.be.equal(affinityId);
+//     });
+
+
+//     pm.test("Response CoverType should match to CSV coverType ", () => {
+//         policy.coverHeader.should.be.equal(data.coverType);
+//     });
+
+//     pm.test("Response CoverEndPeriod should match CSV Renewal Date - 1 day", () => {
+//         let coverExpiryDate = moment(data.renewalDate).subtract(1, "day").format("YYYY-MM-DD");
+//         policy.coverEndPeriod.should.be.equal(coverExpiryDate);
+//     })
+
+//     pm.test("Response CoverStartPeriod should match CoverStartDate - 1Year", () => {
+//         let coverStartDate = moment(data.renewalDate).subtract(1, "year").format("YYYY-MM-DD");
+//         policy.coverStartPeriod.should.be.equal(coverStartDate);
+//     });
+
+//     pm.test("Response ExpiryHighlight should be false", () => {
+//         policy.expiryHighlight.should.be.false;
+//     });
+
+// });

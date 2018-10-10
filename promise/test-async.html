@@ -1,0 +1,17 @@
+<h1>Test async</h1>
+<script>
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(() => {
+        resolve(['ssss', 'larm']);
+    }, ms));
+}
+
+
+var t1 = async () => {
+    const [a, b] = await timeout(3000);
+    console.log("JJJJJ:", a);
+    console.log("BBBB:", b);
+}
+
+t1();
+</script>

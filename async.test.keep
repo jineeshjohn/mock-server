@@ -1,0 +1,69 @@
+const asyncAwait = require('./util');
+const _ = require('lodash');
+const axios = require('axios');
+
+
+
+ 
+
+describe('Async', () => {
+    const resArr = await asyncAwait('./positiveScenarios_singlePolicy.csv', {});
+    const domain = 'http://localhost:2020/insurancepolicies';
+
+
+        it.each(resArr)('Response Status should be 200',   async(params) => {
+        const url = `${domain}?policyNumbers=${params.policyID}:${policyType}:${DC_SYSTEMID}&customerNumbers=${customerID}:${DC_SYSTEMID}&affinityId=${brand}&effectiveDate=${effectiveDate}`;
+        console.log("URL: ", url);
+        // const res = await axios.get(url);
+        //  expect(res.status).should.have.status(200);
+        expect(true).toBe(true);
+    });
+});
+ 
+
+
+// describe('Async', () => {
+//     const domain = 'http://localhost:2020/insurancepolicies';
+    
+//     let resArr;
+    
+//     beforeAll(async(done) => {
+//         resArr = await asyncAwait('./positiveScenarios_singlePolicy.csv', {});
+//         done();
+//     });
+
+//     console.log("JJJJ:", resArr);
+//     it.each(resArr)('Response Status should be 200',   async(params) => {
+//         const url = `${domain}?policyNumbers=${params.policyID}:${policyType}:${DC_SYSTEMID}&customerNumbers=${customerID}:${DC_SYSTEMID}&affinityId=${brand}&effectiveDate=${effectiveDate}`;
+//         console.log("URL: ", url);
+//         // const res = await axios.get(url);
+//        //  expect(res.status).should.have.status(200);
+//        expect(true).toBe(true);
+//     });
+// });
+
+
+// describe('abc describe',  () => {
+//     // first way
+//     const arr = [[1, 1, 2], [1, 2, 3], [2, 1, 3]];
+//     const domain = 'http://localhost:2020/insurancepolicies';
+    
+
+//     // http://localhost:2020/insurancepolicies?policyNumbers=690010037:HAP:311&customerNumbers=6900000480:311&affinityId=LTB&effectiveDate=2018-10-03
+//     let resArr;
+//     let policyType = 'HAP';
+//     let DC_SYSTEMID = '311';
+//     beforeAll(async(done) => {
+//         resArr = await asyncAwait('./positiveScenarios_singlePolicy.csv', {});
+//         done();
+//     });
+//     it('should test all api calls', () => {
+//        const reqArr = _.map(resArr, async(params) => {
+//            const url = `${domain}?policyNmbers=${params.policyID}:${policyType}:${DC_SYSTEMID}&customerNumbers=${params.customerID}:${DC_SYSTEMID}&affinityId=${params.brand}&effectiveDate=${params.effectiveDate}`;
+//            return [await axios.get(url)];
+//        }); 
+
+//        await Promise.all(reqArr);
+//     });
+
+// })

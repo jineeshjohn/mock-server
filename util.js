@@ -22,8 +22,6 @@ var fetch = function (location, options, callback) {
 };
 
 var iterationData = function (location, options, cb) {
-
-
     fetch(location, options, function (err, data) {
         parseCsv(data, {
             columns: true,
@@ -31,14 +29,41 @@ var iterationData = function (location, options, cb) {
             trim: true
         }, cb);
     });
-    // return new Promise((resolve, reject) => {
-    //     navigator.geolocation.getCurrentPosition(resolve, reject, options);
-    // });
-
 }
 
-iterationData('./data-summary.csv', {}, function(){
-    console.log("KKK: ", arguments);
-});
+// Test 1
+// iterationData('./data-summary.csv', {}, function (a, b) {
+//     console.log('YYY:', b);
+// });
 
-module.exports = iterationData;
+
+var asyncAwait = async (location, options) => {
+    return new Promise((resolve, reject) => {
+        fetch(location, options, function (err, data) {
+            parseCsv(data, {
+                columns: true,
+                escape: '\\',
+                trim: true
+            }, function(a, b){
+                resolve(b)
+            });
+        });
+    });
+}
+
+// Test 2
+// const testAsync =  async () => {
+//     const res = await asyncAwait('./data-summary.csv', {});
+//     console.log("EEE:" , res);
+//  }
+
+// testAsync();
+
+
+
+// const foo = async () => {
+//     return "TTTT";
+// };
+
+// foo().then(console.log)
+module.exports = asyncAwait;

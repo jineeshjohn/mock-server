@@ -14,4 +14,5 @@ app.use(function (req, res, next) {
 app.get('/summary', (req, res) => {
     const queries = req.query;
     res.jsonp(queries);
+    console.log("JJJ:",queries);
 });

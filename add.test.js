@@ -1,33 +1,7 @@
 const add = require('./add');
 const http = require('http');
-const iterationData = require('./util');
-
-
-iterationData('./data-summary.csv', {}, function(){
-    console.log("KKK: ", arguments);
-});
-
+const asyncAwait = require('./util');
 const axios = require('axios');
-
-const getBreeds = async () => {
-  try {
-    return await axios.get('https://dog.ceo/api/breeds/list/all')
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-const countBreeds = async () => {
-  console.log("JJJJJJJJJJJJ")
-  const breeds = await getBreeds()
-  console.log("KKKKKKK")
- 
-  if (breeds.data.message) {
-    console.log(`Got ${Object.entries(breeds.data.message).length} breeds`)
-  }
-}
-
-
 
 describe('add', () => {
   it('should add two numbers', () => {
@@ -36,11 +10,13 @@ describe('add', () => {
 });
 
 
-
 describe('Async', () => {
     it('works with async/await', async () => {
-        const res = await axios.get('http://localhost:1935/summary?a=123');
-        expect(res.data).toEqual({a: '123'});
+        const resArr = await asyncAwait('./data-summary.csv', {});
+        for (const params of resArr) {
+            const res = await axios.get(`http://localhost:1935/summary?user_id=${params.user_id}&token_id=${params.token_id}&username=${params.username}&password=${params.password}`);
+            expect(res.data).toEqual(params);
+        }
     });
 });
 
